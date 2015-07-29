@@ -3,8 +3,7 @@
     "description" : "Allows uploading an attachment in a users profile to be used instead of an avatar",
     "keywords"    : [
         "avatar",
-        "attachment",
-        "drag & drop"
+        "attachment"
     ],
     "type"        : "wordpress-plugin",
     "homepage"    : "https://github.com/wecodemore/wcm-avatar",
