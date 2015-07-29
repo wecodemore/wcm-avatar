@@ -47,7 +47,6 @@ class AvatarUploadTemplate implements TemplateInterface
 
 		$action = $this->getAction();
 
-		return print <<<HTML
 		?>
 <div class="wrap">
 	<h2><!--
@@ -81,7 +80,6 @@ class AvatarUploadTemplate implements TemplateInterface
 	</form>
 </div>
 <?php
-HTML;
 	}
 
 
