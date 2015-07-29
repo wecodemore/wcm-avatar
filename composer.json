@@ -1,11 +1,9 @@
 {
-    "name"        : "wecodemore/avatar",
+    "name"        : "wcm/avatar",
     "description" : "Allows uploading an attachment in a users profile to be used instead of an avatar",
     "keywords"    : [
-        "wordpress",
-        "plugin",
-        "post type",
-        "order",
+        "avatar",
+        "attachment",
         "drag & drop"
     ],
     "type"        : "wordpress-plugin",
@@ -30,10 +28,15 @@
     },
     "autoload"    : {
         "psr-4" : {
-            "WCM\\User\\" : "src/"
+            "WCM\\User\\Avatar\\" : "src/"
         }
     },
     "config"      : {
         "optimize-autoloader" : false
+    },
+    "extra"             : {
+        "branch-alias" : {
+            "dev-dev" : "0.1.x-dev"
+        }
     }
 }
