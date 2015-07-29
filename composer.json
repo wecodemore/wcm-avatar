@@ -1,0 +1,39 @@
+{
+    "name"        : "wecodemore/avatar",
+    "description" : "Allows uploading an attachment in a users profile to be used instead of an avatar",
+    "keywords"    : [
+        "wordpress",
+        "plugin",
+        "post type",
+        "order",
+        "drag & drop"
+    ],
+    "type"        : "wordpress-plugin",
+    "homepage"    : "https://github.com/wecodemore/wcm-avatar",
+    "license"     : "MIT",
+    "authors"     : [
+        {
+            "name"     : "Franz Josef Kaiser",
+            "email"    : "wecodemore@gmail.com",
+            "homepage" : "http://unserkaiser.com"
+        }
+    ],
+    "support"     : {
+        "issues" : "https://github.com/wecodemore/wcm-avatar/issues",
+        "source" : "https://github.com/wecodemore/wcm-avatar"
+    },
+    "require"     : {
+        "php"                       : ">=5.4",
+        "composer/installers"       : "~1.0",
+        "wcm/git-php-hooks"         : "^1",
+        "wcm/git-php-hooks-library" : "^1"
+    },
+    "autoload"    : {
+        "psr-4" : {
+            "WCM\\User\\" : "src/"
+        }
+    },
+    "config"      : {
+        "optimize-autoloader" : false
+    }
+}

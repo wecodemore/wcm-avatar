@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+minify assets/style.css > assets/style.min.css

@@ -1,0 +1,19 @@
+{
+    "name"            : "wcm-avatar",
+    "description"     : "(WCM) Avatar An attachment uploader for user profiles",
+    "author"          : "Franz Josef Kaiser <wecodemore@gmail.com>",
+    "private"         : true,
+    "analyze"         : true,
+    "bin"             : "./bin",
+    "devDependencies" : {
+        "watch"      : "~0.13",
+        "concat-cli" : "~1.0",
+        "minify"     : "~1.4"
+    },
+    "scripts"         : {
+        "build:watch" : "sh ./scripts/watch",
+        "build"       : "sh ./scripts/build",
+        "build:css"   : "sh ./scripts/css",
+        "build:js"    : "sh ./scripts/js"
+    }
+}

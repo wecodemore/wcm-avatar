@@ -1,0 +1,8 @@
+<p class="logo--caption" style="background-color: <%= data.color1 %>;">
+	<%= ( ! data.thumb ) ? data.l10n.nothumb : data.name %>
+	| Size: <%= data.width %>px &times; <%= data.height %>px
+	| <a class="edit-attachment" href="<%= data.link %>" target="_blank">
+		<span class="dashicons  dashicons-edit"></span>
+		<%= data.l10n.edit %>
+	</a>
+</p>

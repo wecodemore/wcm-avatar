@@ -1,0 +1,65 @@
+/** Logo (Pl)uploader, UI Elements */
+#tmpl-main--container .drag-drop {
+	height: auto;
+	min-height: 200px;
+}
+#tmpl-main--container #drag-drop-area {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	min-height: 200px;
+}
+#tmpl-thumb--container {
+	height: 160px;
+	min-height: 160px;
+	max-width: 100%;
+	padding: 1em 0.5em;
+	background: url("psback.png") 0 0 repeat;
+	overflow: hidden;
+}
+#tmpl-main--container .attachment-thumbnail {
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#tmpl-main--container .logo--caption {
+	color: #fff;
+	margin: 0 -4px -4px;
+	padding: 1em;
+	text-align: center;
+}
+#tmpl-delete--container .icon {
+	color: #fff;
+	position: absolute;
+	right: -4px;
+	top: -4px;
+	font-size: 40px;
+	height: 40px;
+	width: 40px;
+	cursor: pointer;
+}
+.logo--caption .edit-attachment {
+	text-decoration: none;
+}
+
+
+
+@media screen and (max-width: 782px) {
+	/* Dashicons in Profile/Edit-User Screen:
+	Size up to match admin bar dashicons */
+	.form-table label,
+	.form-table .dashicons,
+	.form-table .devicons {
+		line-height: 43px;
+	}
+	.form-table .dashicons,
+	.form-table .devicons {
+		width: 40px;
+		height: 40px;
+		font-size: 34px;
+	}
+	.form-table .devicons {
+		font-size: 40px;
+	}
+}

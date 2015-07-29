@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+concat-cli -f assets/src/logo/models.js assets/src/logo/views.js assets/src/logo/controller.js -o assets/src/logo/all.js
+
+minify assets/src/logo/models.js     > assets/src/logo/models.min.js
+minify assets/src/logo/views.js      > assets/src/logo/views.min.js
+minify assets/src/logo/controller.js > assets/src/logo/controller.min.js
+minify assets/src/logo/all.js        > assets/src/logo/all.min.js

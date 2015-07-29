@@ -1,0 +1,10 @@
+<div class="wrap  <%= data.att_id === 0 ? 'hidden' : '' %>">
+	<div class="drag-drop">
+		<div id="drag-drop-area">
+			<div id="<%= data.container.thumb %>"></div>
+			<div id="<%= data.container.delete %>"></div>
+			<div id="<%= data.container.caption %>"></div>
+		</div>
+	</div>
+</div>
+<div class="<%= ( data.att_id === 0 && 'foo' ) %>"></div>
