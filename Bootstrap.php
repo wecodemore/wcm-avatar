@@ -39,7 +39,8 @@ add_action( 'plugins_loaded', function()
 	// can fetch the attachment ID to load the avatar
 	$key = apply_filters( 'wcm_user_avatar_meta_key', 'user_avatar' );
 
-	// Register the 'user_id' and 'screen_id' as additional data for attachment uploading
+	// Register the 'user_id' and 'screen_id'
+	// as additional data for attachment uploading
 	$dispatcher->register(
 		new Services\AvatarRegisterMetaService,
 		'upload_post_params'
