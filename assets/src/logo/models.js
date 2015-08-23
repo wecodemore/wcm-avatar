@@ -38,10 +38,11 @@
 				} )
 			)
 				.done( function( response ) {
-					self.set( 'thumb', response.data.thumb );
-					self.set( 'name', response.data.name );
-					self.set( 'width', response.data.width );
+					self.set( 'thumb',  response.data.thumb );
+					self.set( 'name',   response.data.name );
+					self.set( 'width',  response.data.width );
 					self.set( 'height', response.data.height );
+					self.set( 'link',   response.data.link );
 				} )
 				.fail( function( reason ) {
 					//console.log( 'Model:fetch Error',reason );
