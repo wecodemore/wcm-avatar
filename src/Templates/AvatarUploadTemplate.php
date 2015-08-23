@@ -43,7 +43,12 @@ class AvatarUploadTemplate implements TemplateInterface
 		FALSE !== $att_id
 			and $att_id = absint( $att_id );
 
-		$hidden = is_int( $att_id ) and 0 !== $att_id ? 'hidden' : '';
+		$hidden = (
+			is_int( $att_id )
+			and 0 !== $att_id
+		)
+			? 'hidden'
+			: '';
 
 		$action = $this->getAction();
 
