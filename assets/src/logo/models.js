@@ -38,11 +38,13 @@
 				} )
 			)
 				.done( function( response ) {
-					self.set( 'thumb',  response.data.thumb );
-					self.set( 'name',   response.data.name );
-					self.set( 'width',  response.data.width );
-					self.set( 'height', response.data.height );
-					self.set( 'link',   response.data.link );
+					self.set( {
+						thumb  : response.data.thumb,
+						name   : response.data.name,
+						width  : response.data.width,
+						height : response.data.height,
+						link   : response.data.link
+					} );
 				} )
 				.fail( function( reason ) {
 					//console.log( 'Model:fetch Error',reason );
@@ -69,7 +71,9 @@
 
 		// Triggered by: views.Delete
 		destroy : function( att_id ) {
+
 			var self = this;
+
 			$.when(
 				$.post( this.urlRoot, {
 					action      : plugin.action,
@@ -78,16 +82,13 @@
 					task        : 'destroy'
 				} )
 			)
-				.then(
-					// success
-					function( response ) {
-						//console.log( 'Model:destroy Success', response );
-					},
-					// error
-					function( reason ) {
-						//console.log( 'Model:destroy Error', reason );
-					}
-				);
+				.done( function( response ) {
+					// console.log( 'Model:destroy Success', response );
+				} )
+				.fail( function( reason ) {
+					// console.log( 'Model:destroy Error', reason );
+				} );
+
 			return {};
 		}
 	} );
