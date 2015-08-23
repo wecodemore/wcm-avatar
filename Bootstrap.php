@@ -108,7 +108,7 @@ add_action( 'plugins_loaded', function()
 	    'setup'
 	] );
 
-	// Target for the Avatar Backbone template
+	// Target for the Avatar Backbone filled template
 	add_action( 'all_admin_notices', function() use ( $key )
 	{
 		if ( in_array(
