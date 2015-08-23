@@ -21,7 +21,6 @@
 if ( file_exists( __DIR__.'/vendor/autoload.php' ) )
 	require __DIR__.'/vendor/autoload.php';
 
-use WCM\User\Avatar\Mediators\ServiceDispatcher;
 use WCM\User\Avatar\Controllers;
 use WCM\User\Avatar\Services;
 use WCM\User\Avatar\Views;
@@ -30,10 +29,6 @@ use WCM\User\Avatar\Templates;
 
 add_action( 'plugins_loaded', function()
 {
-	// Dispatcher: Attach Services, dispatches them on a hook
-	$dispatcher = new ServiceDispatcher;
-
-
 	// Handles the drag & drop uploader logic for the user avatar
 	// Use this filter to adjust the meta key with which a theme author
 	// can fetch the attachment ID to load the avatar
@@ -41,34 +36,37 @@ add_action( 'plugins_loaded', function()
 
 	// Register the 'user_id' and 'screen_id'
 	// as additional data for attachment uploading
-	$dispatcher->register(
+	add_filter( 'upload_post_params', [
 		new Services\AvatarRegisterMetaService,
-		'upload_post_params'
-	);
+	    'setup'
+	] );
 
 	// Connect user and attachment via their IDs as meta data
-	$dispatcher->register(
+	add_filter( 'wp_generate_attachment_metadata', [
 		new Services\AvatarAddMetaService( $key ),
-		'wp_generate_attachment_metadata'
-	);
+	    'setup'
+	] );
 
 	// Remove the user meta data when the attachment gets deleted
-	$dispatcher->register(
+	add_filter( 'delete_attachment', [
 		new Services\AvatarDeleteMetaService( $key ),
-		'delete_attachment'
-	);
+	    'setup'
+	] );
 
 	// Remove the attachment post when the user gets deleted
-	$dispatcher->register(
+	add_filter( 'delete_user', [
 		new Services\AvatarDeleteService( $key ),
-		'delete_user'
-	);
+	    'setup'
+	] );
 
 	// Save files when using the "Browser Uploader"
-	$dispatcher->register(
-		new Services\AvatarBrowserUploaderSaveService( $key ),
-		[ 'load-profile.php', 'load-user-edit.php', ]
-	);
+	foreach ( [ 'load-profile.php', 'load-user-edit.php', ] as $filter )
+	{
+		add_filter( $filter, [
+			new Services\AvatarBrowserUploaderSaveService( $key ),
+		    'setup'
+		] );
+	}
 
 	// Ajax Model
 	$ajax = new Models\AjaxAware(
@@ -77,38 +75,38 @@ add_action( 'plugins_loaded', function()
 	);
 
 	// Allow registering Underscore Templates using the WP Dependency API
-	$dispatcher->register(
+	add_filter( 'script_loader_tag', [
 		new Services\UnderscoreTemplateScripts,
-		'script_loader_tag'
-	);
+	    'setup'
+	] );
 
 	// Register the AJAX handling scripts, localize the needed data
-	$dispatcher->register(
+	add_filter( 'admin_enqueue_scripts', [
 		new Services\AvatarScriptsService(
 			$ajax,
 			$key,
 			plugin_dir_url( __FILE__ ),
 			plugin_dir_path( __FILE__ )
 		),
-		'admin_enqueue_scripts'
-	);
+	    'setup'
+	] );
 
 	// Register the AJAX handler/callback to fetch/delete Attachments
 	// using the "Multi-File Uploader"
-	$dispatcher->register(
+	add_filter( "wp_ajax_{$ajax->getAction()}", [
 		new Services\AvatarFetchDeleteAjaxService( $ajax ),
-		"wp_ajax_{$ajax->getAction()}"
-	);
+	    'setup'
+	] );
 
 	// Adds either the drag & drop uploader for the user avatar or the avatar itself
-	$dispatcher->register(
+	add_filter( 'all_admin_notices', [
 		new Views\UploadView(
 			new Templates\AvatarUploadTemplate( $key ),
 			new Templates\AvatarDisplayTemplate,
 			$key
 		),
-		'all_admin_notices'
-	);
+	    'setup'
+	] );
 
 	// Target for the Avatar Backbone template
 	add_action( 'all_admin_notices', function() use ( $key )
@@ -118,44 +116,44 @@ add_action( 'plugins_loaded', function()
 
 
 	// Limit upload size of image to 256 * 512 = 128 kB
-	$dispatcher->register(
+	add_filter( 'upload_size_limit', [
 		new Services\AvatarUploadSizeLimit(
 			'manage_options',
 			256 * 512,
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
-		'upload_size_limit'
-	);
+	    'setup'
+	] );
 
 
 	// Limit allowed MIME types for image uploads
-	$dispatcher->register(
+	add_filter( 'upload_mimes', [
 		new Services\AvatarMIMELimitService(
 			'manage_options',
 			[ 'jpg|jpeg|jpe', 'gif', 'png', 'webp', ],
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
-		'upload_mimes'
-	);
+		'setup'
+	] );
 
 
 	// Limit width/height of uploaded images
-	$dispatcher->register(
+	add_filter( 'wp_handle_upload_prefilter', [
 		new Services\AvatarDimensionLimitService(),
-		'wp_handle_upload_prefilter'
-	);
+	    'setup'
+	] );
 
 
 	// Add Image to User Columns
-	$dispatcher->register(
+	add_filter( 'manage_users_columns', [
 		new Services\AvatarUserColumnService( $key ),
-		'manage_users_columns'
-	);
+		'setup'
+	] );
 
 
 	// Register stylesheet for Icons and other UI integration
-	$dispatcher->register(
+	add_filter( 'admin_enqueue_scripts', [
 		new Services\AdminStylesService( __FILE__ ),
-		'admin_enqueue_scripts'
-	);
+	    'setup'
+	] );
 } );
