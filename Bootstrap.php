@@ -68,17 +68,17 @@ add_action( 'plugins_loaded', function()
 		] );
 	}
 
-	// Ajax Model
-	$ajax = new Models\AjaxAware(
-		$key,
-		"{$key}_nonce"
-	);
-
 	// Allow registering Underscore Templates using the WP Dependency API
 	add_filter( 'script_loader_tag', [
 		new Services\UnderscoreTemplateScripts,
 	    'setup'
 	] );
+
+	// Ajax Model
+	$ajax = new Models\AjaxAware(
+		$key,
+		"{$key}_nonce"
+	);
 
 	// Register the AJAX handling scripts, localize the needed data
 	add_filter( 'admin_enqueue_scripts', [
