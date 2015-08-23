@@ -137,6 +137,8 @@ add_action( 'plugins_loaded', function()
 	] );
 
 
+# Sizes
+# 32 Admin User List Table
 	// Limit width/height of uploaded images
 	add_filter( 'wp_handle_upload_prefilter', [
 		new Services\AvatarDimensionLimitService(),
@@ -145,10 +147,24 @@ add_action( 'plugins_loaded', function()
 
 
 	// Add Image to User Columns
-	add_filter( 'manage_users_columns', [
-		new Services\AvatarUserColumnService( $key ),
-		'setup'
-	] );
+	// Use the filter to enable this feature
+	if ( apply_filters( 'wcm.avatar.enable_custom_column', NULL ) )
+	{
+		add_filter( 'manage_users_columns', [
+			new Services\AvatarUserColumnService( $key ),
+			'setup'
+		] );
+	}
+
+	// Replace "Gravatar"-Avatar with custom attachment in User Column
+	// Use the filter to disable this feature
+	if ( apply_filters( 'wcm.avatar.enable_custom_avatar', TRUE ) )
+	{
+		add_filter( 'pre_get_avatar', [
+			new Services\AvatarReplacementService( $key ),
+			'setup'
+		], 20, 3 );
+	}
 
 
 	// Register stylesheet for Icons and other UI integration
