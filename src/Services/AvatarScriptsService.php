@@ -224,7 +224,7 @@ class AvatarScriptsService implements ServiceInterface
 
 
 	/**
-	 * Adjust the
+	 * Adjust the Color scheme
 	 * @return array
 	 */
 	public function getColors()

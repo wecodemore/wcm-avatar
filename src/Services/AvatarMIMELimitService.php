@@ -18,7 +18,6 @@ namespace WCM\User\Avatar\Services;
  */
 class AvatarMIMELimitService implements ServiceInterface
 {
-
 	/** @var string */
 	private $cap;
 
