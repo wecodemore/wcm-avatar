@@ -40,7 +40,7 @@ class AvatarUserColumnService implements ServiceInterface
 	 */
 	public function setup( Array $columns = [ ] )
 	{
-		$end = array_slice( $columns, 2 );
+		$end   = array_slice( $columns, 2 );
 		$start = array_diff( $columns, $end );
 
 		add_action( 'manage_users_custom_column', [
@@ -85,20 +85,17 @@ class AvatarUserColumnService implements ServiceInterface
 		$dom = new \DOMDocument;
 		$dom->loadHTML( $img );
 
-		/** @var \DOMElement $tag */
+		/** @var \DOMNodeList $images */
 		$images = $dom->getElementsByTagName( 'img' );
-		foreach ( $images as $tag )
-		{
-			$tag->setAttribute( 'width', 32 );
-			$tag->setAttribute( 'height', 32 );
+		/** @var \DOMElement $tag */
+		$tag    = $images->item(0);
+		$tag->setAttribute( 'width', 32 );
+		$tag->setAttribute( 'height', 32 );
 
-			return sprintf(
-				'<a href="%s">%s</a>',
-				get_edit_post_link( $att_id ),
-				$dom->saveHTML( $tag )
-			);
-		}
-
-		return $value;
+		return sprintf(
+			'<a href="%s">%s</a>',
+			get_edit_post_link( $att_id ),
+			$dom->saveHTML( $tag )
+		);
 	}
 }
