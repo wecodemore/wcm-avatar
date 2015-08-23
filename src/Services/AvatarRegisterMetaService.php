@@ -20,7 +20,6 @@ namespace WCM\User\Avatar\Services;
  */
 class AvatarRegisterMetaService implements ServiceInterface
 {
-
 	/**
 	 * Attach the 'user_id' and the current 'screen_id' as params
 	 * Allows easy identification of the current screen and user
@@ -31,7 +30,11 @@ class AvatarRegisterMetaService implements ServiceInterface
 	public function setup( Array $params = [ ] )
 	{
 		# If this produces errors, narrow it down:
-		# if ( 'media' === get_current_screen()->base and 'add' === get_current_screen()->action ) return $params;
+		# if (
+		#   'media' === get_current_screen()->base
+		#    and 'add' === get_current_screen()->action
+		# )
+		#   return $params;
 
 		$user_id = get_current_user_id();
 
