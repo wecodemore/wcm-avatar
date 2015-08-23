@@ -54,7 +54,7 @@ class AvatarReplacementService implements ServiceInterface
 		$args['size_name_2x'] = 'medium';
 
 		// Use this filter to customize the passed arguments
-		$args = apply_filters( 'wcm.avatar.size', $args );
+		$args = apply_filters( 'wcm.avatar.args', $args );
 
 		$img = wp_get_attachment_image(
 			$att_id,
