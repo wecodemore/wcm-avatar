@@ -37,16 +37,15 @@
 					task        : 'fetch'
 				} )
 			)
-				.then(
-					// success
-					function( response ) {
-						//console.log( 'RESPONSE', self.attributes );
-					},
-					// error
-					function( reason ) {
-						//console.log( 'Model:fetch Error',reason );
-					}
-				);
+				.done( function( response ) {
+					self.set( 'thumb', response.data.thumb );
+					self.set( 'name', response.data.name );
+					self.set( 'width', response.data.width );
+					self.set( 'height', response.data.height );
+				} )
+				.fail( function( reason ) {
+					//console.log( 'Model:fetch Error',reason );
+				} );
 
 			/*wp.ajax.post( plugin.action, {
 				_ajax_nonce : plugin._ajax_nonce,
