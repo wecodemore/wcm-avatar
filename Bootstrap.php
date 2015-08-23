@@ -111,7 +111,11 @@ add_action( 'plugins_loaded', function()
 	// Target for the Avatar Backbone template
 	add_action( 'all_admin_notices', function() use ( $key )
 	{
-		echo '<div id="tmpl-main--container"></div>';
+		if ( in_array(
+			get_current_screen()->base,
+			[ 'profile', 'user-edit', ]
+		) )
+			echo '<div id="tmpl-main--container"></div>';
 	}, 20 );
 
 
