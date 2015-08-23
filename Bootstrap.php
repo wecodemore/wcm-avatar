@@ -72,7 +72,7 @@ add_action( 'plugins_loaded', function()
 	add_filter( 'script_loader_tag', [
 		new Services\UnderscoreTemplateScripts,
 	    'setup'
-	] );
+	], 20, 3 );
 
 	// Ajax Model
 	$ajax = new Models\AjaxAware(
