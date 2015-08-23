@@ -50,7 +50,7 @@ class AvatarUploadTemplate implements TemplateInterface
 		?>
 <div class="wrap">
 	<h2><!--
-		Placeholder so the fucking WP JavaScript error/success msg
+		Placeholder so the f***ing WP JavaScript error/success msg
 		gets inserted here and not *below* the title.
 	--></h2>
 	<h2><?php echo esc_html( __( 'Logo', 'company_domain' ) ); ?></h2>
