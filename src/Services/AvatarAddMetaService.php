@@ -60,8 +60,7 @@ class AvatarAddMetaService implements ServiceInterface
 				] )
 				and isset( $_REQUEST['user_id'] )
 			)
-		)
-		{
+		) {
 			$user_id = absint( filter_var( $_REQUEST['user_id'], FILTER_VALIDATE_INT ) );
 
 			// Attach attachment ID to user meta as single entry (querying allowed)
