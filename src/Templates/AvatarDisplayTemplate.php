@@ -44,7 +44,9 @@ class AvatarDisplayTemplate
 		$thumb = wp_get_attachment_image( $this->att_id );
 		$meta  = wp_get_attachment_metadata( $this->att_id );
 
-		$hidden = ( empty( $name ) or ! $meta ) ? 'hidden' : '';
+		$hidden = ( empty( $name ) or ! $meta )
+			? 'hidden'
+			: '';
 
 		$color = get_user_meta( get_current_user_id(), 'admin_color', TRUE );
 		! $color and $color = 'fresh';
@@ -63,12 +65,12 @@ class AvatarDisplayTemplate
 					<div id="{$this->att_id}" class="attachment-container">
 						{$thumb}
 					</div>
-					<!--<div id="delete-tmpl--container">
+					<div id="tmpl-delete--container">
 						<span class="icon  dashicons  dashicons-no-alt"
 							style="background-color: {$scheme[1]}"
 							onMouseOver="this.style.color='{$scheme[2]}'"
 							onMouseOut="this.style.color='#fff'"></span>
-					</div>-->
+					</div>
 					<div id="tmpl-caption--container">
 						<p class="logo--caption" style="background-color: {$scheme[1]}">
 							{$name} | Size: {$meta['width']}px &times; {$meta['height']}px | <a class="edit-attachment" href="{$link}" target="_blank">{$edit}</a>
