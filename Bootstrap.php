@@ -32,7 +32,8 @@ add_action( 'plugins_loaded', function()
 	// Handles the drag & drop uploader logic for the user avatar
 	// Use this filter to adjust the meta key with which a theme author
 	// can fetch the attachment ID to load the avatar
-	$key = apply_filters( 'wcm_user_avatar_meta_key', 'user_avatar' );
+	$key = apply_filters( 'wcm.avatar.meta_key', 'user_avatar' );
+	register_meta( 'user', $key, null, null );
 
 	// Register the 'user_id' and 'screen_id'
 	// as additional data for attachment uploading
@@ -45,7 +46,7 @@ add_action( 'plugins_loaded', function()
 	add_filter( 'wp_generate_attachment_metadata', [
 		new Services\AvatarAddMetaService( $key ),
 	    'setup'
-	] );
+	], 10, 2 );
 
 	// Remove the user meta data when the attachment gets deleted
 	add_filter( 'delete_attachment', [
@@ -72,7 +73,7 @@ add_action( 'plugins_loaded', function()
 	add_filter( 'script_loader_tag', [
 		new Services\UnderscoreTemplateScripts,
 	    'setup'
-	] );
+	], 20, 3 );
 
 	// Ajax Model
 	$ajax = new Models\AjaxAware(
@@ -108,7 +109,7 @@ add_action( 'plugins_loaded', function()
 	    'setup'
 	] );
 
-	// Target for the Avatar Backbone template
+	// Target for the Avatar Backbone filled template
 	add_action( 'all_admin_notices', function() use ( $key )
 	{
 		if ( in_array(

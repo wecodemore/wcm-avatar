@@ -43,14 +43,19 @@ class AvatarUploadTemplate implements TemplateInterface
 		FALSE !== $att_id
 			and $att_id = absint( $att_id );
 
-		$hidden = is_int( $att_id ) and 0 !== $att_id ? 'hidden' : '';
+		$hidden = (
+			is_int( $att_id )
+			and 0 !== $att_id
+		)
+			? 'hidden'
+			: '';
 
 		$action = $this->getAction();
 
 		?>
 <div class="wrap">
 	<h2><!--
-		Placeholder so the fucking WP JavaScript error/success msg
+		Placeholder so the f***ing WP JavaScript error/success msg
 		gets inserted here and not *below* the title.
 	--></h2>
 	<h2><?php echo esc_html( __( 'Logo', 'company_domain' ) ); ?></h2>
