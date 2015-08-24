@@ -33,6 +33,9 @@ add_action( 'plugins_loaded', function()
 	// Use this filter to adjust the meta key with which a theme author
 	// can fetch the attachment ID to load the avatar
 	$key = apply_filters( 'wcm.avatar.meta_key', 'user_avatar' );
+
+	// When switching the plugin, this can be reused to allow
+	// access to the data in other plugins
 	register_meta( 'user', $key, null, null );
 
 	// Register the 'user_id' and 'screen_id'
@@ -58,7 +61,7 @@ add_action( 'plugins_loaded', function()
 	add_filter( 'delete_user', [
 		new Services\AvatarDeleteService( $key ),
 	    'setup'
-	] );
+	], 10, 2 );
 
 	// Save files when using the "Browser Uploader"
 	foreach ( [ 'load-profile.php', 'load-user-edit.php', ] as $filter )
@@ -128,7 +131,7 @@ add_action( 'plugins_loaded', function()
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
 	    'setup'
-	] );
+	], 10, 3 );
 
 
 	// Limit allowed MIME types for image uploads
@@ -139,7 +142,7 @@ add_action( 'plugins_loaded', function()
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
 		'setup'
-	] );
+	], 10, 2 );
 
 
 # Sizes
