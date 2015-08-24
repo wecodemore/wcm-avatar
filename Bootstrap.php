@@ -46,7 +46,7 @@ add_action( 'plugins_loaded', function()
 	add_filter( 'wp_generate_attachment_metadata', [
 		new Services\AvatarAddMetaService( $key ),
 	    'setup'
-	] );
+	], 10, 2 );
 
 	// Remove the user meta data when the attachment gets deleted
 	add_filter( 'delete_attachment', [
