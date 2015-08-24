@@ -67,6 +67,7 @@ class AvatarFetchDeleteAjaxService implements ServiceInterface
 					'link'   => esc_url( get_edit_post_link( $att_id ) ),
 				] );
 				break;
+
 			case 'destroy' :
 				/** @var bool|\WP_Post $result */
 				$result = wp_delete_attachment( absint( $att_id ), TRUE );
