@@ -42,18 +42,35 @@ class AvatarDimensionLimitService implements ServiceInterface
 
 		}*/
 
-		$limit = absint( filter_var( apply_filters(
-			'wcm.avatar.size_max',
+		// Maximum
+		$max = absint( filter_var( apply_filters(
+			'wcm.avatar.size.max',
 			1024
 		), FILTER_SANITIZE_NUMBER_INT ) );
 
-		if ( $limit < max( $width, $height ) )
+		if ( $max < max( $width, $height ) )
 		{
 			$file['error'] = sprintf( _x(
 				'Image exceeds maximum size of %spx × %spx',
 				'%s are the maximum pixels',
 				'clients_domain'
-			), number_format_i18n( $limit ), number_format_i18n( $limit ) );
+			), number_format_i18n( $max ), number_format_i18n( $max ) );
+		}
+
+		// Minimum
+		$min = absint( filter_var( apply_filters(
+			'wcm.avatar.size.min',
+			32
+		), FILTER_SANITIZE_NUMBER_INT ) );
+
+		// The larger size should not be below the requested min size
+		if ( $min > max( $width, $height ) )
+		{
+			$file['error'] = sprintf( _x(
+				'Image does not reach the needed minimum size of %spx × %spx',
+				'%s are the minimum pixels',
+				'clients_domain'
+			), number_format_i18n( $min ), number_format_i18n( $min ) );
 		}
 
 		/*$magick = new \Imagick( $file['tmp_name'] );
