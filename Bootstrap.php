@@ -33,6 +33,7 @@ add_action( 'plugins_loaded', function()
 	// Use this filter to adjust the meta key with which a theme author
 	// can fetch the attachment ID to load the avatar
 	$key = apply_filters( 'wcm.avatar.meta_key', 'user_avatar' );
+	register_meta( 'user', $key, null, null );
 
 	// Register the 'user_id' and 'screen_id'
 	// as additional data for attachment uploading
