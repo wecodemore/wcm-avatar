@@ -37,6 +37,9 @@ class AddUserMetaService implements ServiceInterface
 
 
 	/**
+	 * Adds/ Deletes user meta data
+	 * Sanitizes the provided data
+	 *
 	 * Important: The $result values are completely useless for
 	 * custom error messages as the return value is mostly 'false'
 	 *
@@ -44,10 +47,10 @@ class AddUserMetaService implements ServiceInterface
 	 */
 	public function setup( $user_id = 0 )
 	{
-		if ( ! isset( $_POST[$this->key] ) )
+		if ( ! isset( $_POST[ $this->key ] ) )
 			return;
 
-		$data = $_POST[$this->key];
+		$data = $_POST[ $this->key ];
 
 		// Delete meta if deliberately emptied (deleted)
 		if ( empty( $data ) )
@@ -60,10 +63,12 @@ class AddUserMetaService implements ServiceInterface
 		// Sanitize data with a user defined & provided callback
 		add_filter( "sanitize_user_meta_{$this->key}", $this->sanitizer, 10, 3 );
 
-		$result = update_user_meta( $user_id, $this->key, $data );
+		$result = ! metadata_exists( 'user', $user_id, $this->key )
+			? add_user_meta( $user_id, $this->key, $data, TRUE )
+			: update_user_meta( $user_id, $this->key, $data );
 
-		#if ( ! is_int( $result ) )
-		#	add_action( 'user_profile_update_errors', [ $this, 'addErrors' ], 10, 3 );
+		if ( ! is_int( $result ) )
+			add_action( 'user_profile_update_errors', [ $this, 'addErrors' ], 10, 3 );
 	}
 
 
