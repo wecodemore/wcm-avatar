@@ -77,14 +77,15 @@ class UploadView implements ServiceInterface
 			or (
 				isset( $_POST['html-upload'] )
 				and 'Upload' === $_POST['html-upload']
+				)
 			)
-		)
 		{
 			check_admin_referer( 'media-form' );
 
 			$att_id = get_user_meta( $GLOBALS['user_id'], $this->key, TRUE );
+
 			$this->image->setData( absint( $att_id ) );
-			echo $this->$image;
+			echo $this->image;
 		}
 	}
 
