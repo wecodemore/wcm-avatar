@@ -131,7 +131,7 @@ add_action( 'plugins_loaded', function()
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
 	    'setup'
-	] );
+	], 10, 3 );
 
 
 	// Limit allowed MIME types for image uploads
@@ -142,7 +142,7 @@ add_action( 'plugins_loaded', function()
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
 		'setup'
-	] );
+	], 10, 2 );
 
 
 # Sizes
