@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/wecodemore/wcm-avatar.png?label=ready&title=Ready)](https://waffle.io/wecodemore/wcm-avatar)
 # WCM Avatar
 
 WordPress plugin that adds an attachment uploader to a users profile
