@@ -32,10 +32,5 @@
     },
     "config"      : {
         "optimize-autoloader" : true
-    },
-    "extra"             : {
-        "branch-alias" : {
-            "dev-dev" : "0.1.x-dev"
-        }
     }
 }
