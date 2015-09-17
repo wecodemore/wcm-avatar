@@ -27,7 +27,7 @@ class AvatarReplacementService implements ServiceInterface
 	 */
 	public function __construct( $key )
 	{
-		$this->key   = $key;
+		$this->key = $key;
 	}
 
 
@@ -115,11 +115,15 @@ class AvatarReplacementService implements ServiceInterface
 		$tag->setAttribute( 'width', $args['width'] );
 		$tag->setAttribute( 'height', $args['height'] );
 
-		return sprintf(
-			'<a href="%s">%s</a>',
-			get_edit_post_link( $att_id ),
-			$dom->saveHTML( $tag )
-		);
+		$html = $dom->saveHTML( $tag );
+
+		return $this->getDefaultMarkUp()
+			? $html
+			: sprintf(
+				'<a href="%s">%s</a>',
+				get_edit_post_link( $att_id ),
+				$html
+			);
 	}
 
 
@@ -183,5 +187,25 @@ class AvatarReplacementService implements ServiceInterface
 			"  ",
 			array_filter( $classes )
 		);
+	}
+
+
+	/**
+	 * Get the default <img> tag?
+	 * @return bool
+	 */
+	private function getDefaultMarkUp()
+	{
+		// Preserve the Admin Bar Avatar Layout
+		if (
+			is_admin_bar_showing()
+			&& ! did_action( 'wp_after_admin_bar_render' )
+		)
+			return true;
+
+		if ( is_admin() )
+			return false;
+
+		return true;
 	}
 }
