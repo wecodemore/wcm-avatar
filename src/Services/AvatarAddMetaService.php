@@ -67,14 +67,14 @@ class AvatarAddMetaService implements ServiceInterface
 			) );
 
 			// Attach attachment ID to user meta as single entry (querying allowed)
-			$result_umeta = update_user_meta(
+			update_user_meta(
 				$user_id,
 				$this->key,
 				$att_id
 			);
 
 			// Attach user to attachment (single meta entry to allow querying)
-			$result_pmeta = add_post_meta(
+			add_post_meta(
 				$att_id,
 				'user_id',
 				$user_id,
