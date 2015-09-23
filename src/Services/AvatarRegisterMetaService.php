@@ -36,12 +36,15 @@ class AvatarRegisterMetaService implements ServiceInterface
 		# )
 		#   return $params;
 
-		$user_id = get_current_user_id();
+		$screen = get_current_screen()->id;
 
-		$params['screen_id'] = get_current_screen()->id;
-		$params['user_id']   = isset( $user_id )
-			? $user_id
-			: $GLOBALS['user_id'];
+		if ( in_array( $screen, [ 'profile', 'user-edit', ], true ) ) {
+			$user_id = $screen === 'profile'
+				? get_current_user_id()
+				: $GLOBALS['user_id'];
+			$params['screen_id'] = $screen;
+			$params['user_id'] = $user_id;
+		}
 
 		return $params;
 	}
