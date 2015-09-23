@@ -52,13 +52,14 @@ class AvatarUploadTemplate implements TemplateInterface
 
 		$action = $this->getAction();
 
+		$title = esc_html( apply_filters( 'wcm.avatar.avatar_title', 'User Image' ) );
 		?>
 <div class="wrap">
 	<h2><!--
 		Placeholder so the f***ing WP JavaScript error/success msg
 		gets inserted here and not *below* the title.
 	--></h2>
-	<h2><?php echo esc_html( __( 'Logo', 'company_domain' ) ); ?></h2>
+	<h2><?php echo $title; ?></h2>
 	<form enctype="multipart/form-data"
 		  method="post"
 		  action="<?php echo $action; ?>"
