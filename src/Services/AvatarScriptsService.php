@@ -252,9 +252,11 @@ class AvatarScriptsService implements ServiceInterface
 		];
 	}
 
-
+	
 	/**
 	 * @param int $att_id
+	 * @param     $colors
+	 * @param     $meta
 	 * @return array
 	 */
 	public function getData( $att_id, $colors, $meta )
