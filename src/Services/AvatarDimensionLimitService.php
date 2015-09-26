@@ -25,6 +25,13 @@ class AvatarDimensionLimitService implements ServiceInterface
 	 */
 	public function setup( Array $file = [ ] )
 	{
+		// do not affect other screens
+		$screen = filter_input( INPUT_POST, 'screen_id', FILTER_SANITIZE_STRING );
+		if ( ! in_array( $screen, [ 'profile', 'user-edit' ], TRUE ) )
+		{
+			return $file;
+		}
+
 		$data = getimagesize( $file['tmp_name'] );
 		// "Handle" cases where we can't get any info:
 		if ( ! $data )
@@ -47,6 +54,12 @@ class AvatarDimensionLimitService implements ServiceInterface
 			'wcm.avatar.size.max',
 			1024
 		), FILTER_SANITIZE_NUMBER_INT ) );
+
+		// allow no limit by passing 0 as limit
+		if ( $max < 1 )
+		{
+			return $file;
+		}
 
 		if ( $max < max( $width, $height ) )
 		{
