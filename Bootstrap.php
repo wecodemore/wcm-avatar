@@ -180,4 +180,12 @@ add_action( 'plugins_loaded', function()
 		new Services\AdminStylesService( __FILE__ ),
 	    'setup'
 	] );
+
+
+
+	// ## Front end uploader
+	add_action( 'wp_enqueue_scripts', function()
+	{
+		wp_enqueue_media();
+	} );
 } );
