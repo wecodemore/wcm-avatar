@@ -51,7 +51,8 @@ class AvatarUploadSizeLimit implements ServiceInterface
 	public function setup( $limit = 0, $u_bytes = 0, $p_bytes = 0 )
 	{
 		return (
-			in_array( get_current_screen()->base, $this->bases )
+			is_admin()
+			&& in_array( get_current_screen()->base, $this->bases )
 			and ! current_user_can( $this->cap )
 		)
 			? $this->limit

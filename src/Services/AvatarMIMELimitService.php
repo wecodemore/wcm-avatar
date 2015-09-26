@@ -56,8 +56,9 @@ class AvatarMIMELimitService implements ServiceInterface
 
 		if (
 			empty( $this->where )
-			or ! in_array( get_current_screen()->base, $this->where )
 			or current_user_can( $this->cap )
+			or is_admin()
+			&& ! in_array( get_current_screen()->base, $this->where )
 		)
 			return $mimes;
 
