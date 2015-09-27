@@ -35,6 +35,11 @@ class AvatarRegisterMetaService implements ServiceInterface
 		#    and 'add' === get_current_screen()->action
 		# )
 		#   return $params;
+		if ( ! is_admin() )
+			return [
+				'screen_id' => '',
+			    'user_id'   => get_current_user_id(),
+			];
 
 		$screen = get_current_screen()->id;
 
