@@ -53,12 +53,15 @@ class UploadView implements ServiceInterface
 	public function setup()
 	{
 		if (
-			! current_user_can( 'upload_files' )
-			or ! current_user_can( 'edit_user' )
-			or ! in_array( get_current_screen()->base, [
-				'profile',
-				'user-edit',
-			] )
+			is_admin()
+			&& (
+				! current_user_can( 'upload_files' )
+				or ! current_user_can( 'edit_user' )
+				or ! in_array( get_current_screen()->base, [
+					'profile',
+					'user-edit',
+				] )
+			)
 		)
 			return;
 
