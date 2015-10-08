@@ -43,11 +43,11 @@ class AvatarReplacementService implements ServiceInterface
 		if ( ! $args['force_display'] && ! get_option( 'show_avatars' ) )
 			return FALSE;
 
-		$att_id = absint( get_user_meta(
+		$att_id = get_user_meta(
 			$user_id,
 			$this->key,
 			TRUE
-		) );
+		);
 
 		if ( ! $att_id )
 			return NULL;
