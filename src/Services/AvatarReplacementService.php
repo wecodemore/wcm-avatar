@@ -32,9 +32,9 @@ class AvatarReplacementService implements ServiceInterface
 
 
 	/**
-	 * @param string     $html
-	 * @param int|string $id_or_email
-	 * @param array      $args
+	 * @param string               $html
+	 * @param int|string|\stdClass $id_or_email ID, email or Comment object
+	 * @param array                $args
 	 * @return null|string Return NULL to abort and replace nothing
 	 */
 	public function setup( $html = '', $id_or_email = -1, Array $args = [ ] )
@@ -44,9 +44,7 @@ class AvatarReplacementService implements ServiceInterface
 			return '';
 
 		/** @var \WP_User|bool $user */
-		$user = is_numeric( $id_or_email )
-			? get_userdata( $id_or_email )
-			: get_user_by( 'email', $id_or_email );
+		$user = $this->getUser( $id_or_email );
 
 		if ( ! $user instanceof \WP_User )
 			return '';
@@ -115,6 +113,24 @@ class AvatarReplacementService implements ServiceInterface
 		$tag->setAttribute( 'height', $args['height'] );
 
 		return $dom->saveHTML( $tag );
+	}
+
+
+	/**
+	 * @param int|string|\stdClass $alot ID, email or Comment object
+	 * @return false|\WP_User
+	 */
+	private function getUser( $alot )
+	{
+		if (
+			is_object( $alot )
+			and isset( $alot->comment_author )
+		)
+			return get_userdata( $alot->comment_author );
+
+		return is_numeric( $alot )
+			? get_userdata( $alot )
+			: get_user_by( 'email', $alot );
 	}
 
 
