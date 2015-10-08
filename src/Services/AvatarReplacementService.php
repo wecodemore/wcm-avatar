@@ -39,11 +39,9 @@ class AvatarReplacementService implements ServiceInterface
 	 */
 	public function setup( $html = '', $id_or_email = -1, Array $args = [ ] )
 	{
-		$default = get_option( 'avatar_default', 'mystery' );
-
 		// Don't force display
 		if ( ! $args['force_display'] && ! get_option( 'show_avatars' ) )
-			return $default;
+			return '';
 
 		/** @var \WP_User|bool $user */
 		$user = is_numeric( $id_or_email )
@@ -51,7 +49,7 @@ class AvatarReplacementService implements ServiceInterface
 			: get_user_by( 'email', $id_or_email );
 
 		if ( ! $user instanceof \WP_User )
-			return $default;
+			return '';
 
 		$att_id = get_user_meta(
 			$user->ID,
@@ -60,7 +58,7 @@ class AvatarReplacementService implements ServiceInterface
 		);
 
 		if ( ! $att_id )
-			return $default;
+			return '';
 
 		// Additional argument to pass the attachment image
 		// size name to the filter
@@ -77,7 +75,7 @@ class AvatarReplacementService implements ServiceInterface
 			FALSE
 		);
 		if ( empty( $img ) )
-			return $default;
+			return '';
 
 		$dom = new \DOMDocument;
 		$dom->loadHTML( $img );
