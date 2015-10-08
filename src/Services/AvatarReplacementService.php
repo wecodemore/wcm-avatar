@@ -54,7 +54,7 @@ class AvatarReplacementService implements ServiceInterface
 			return $default;
 
 		$att_id = get_user_meta(
-			$id_or_email,
+			$user->ID,
 			$this->key,
 			TRUE
 		);
