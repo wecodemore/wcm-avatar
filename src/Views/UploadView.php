@@ -53,12 +53,15 @@ class UploadView implements ServiceInterface
 	public function setup()
 	{
 		if (
-			! current_user_can( 'upload_files' )
-			or ! current_user_can( 'edit_user' )
-			or ! in_array( get_current_screen()->base, [
-				'profile',
-				'user-edit',
-			] )
+			is_admin()
+			&& (
+				! current_user_can( 'upload_files' )
+				or ! current_user_can( 'edit_user' )
+				or ! in_array( get_current_screen()->base, [
+					'profile',
+					'user-edit',
+				] )
+			)
 		)
 			return;
 
@@ -77,14 +80,15 @@ class UploadView implements ServiceInterface
 			or (
 				isset( $_POST['html-upload'] )
 				and 'Upload' === $_POST['html-upload']
+				)
 			)
-		)
 		{
 			check_admin_referer( 'media-form' );
 
 			$att_id = get_user_meta( $GLOBALS['user_id'], $this->key, TRUE );
+
 			$this->image->setData( absint( $att_id ) );
-			echo $this->$image;
+			echo $this->image;
 		}
 	}
 

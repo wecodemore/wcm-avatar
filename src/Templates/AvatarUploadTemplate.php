@@ -39,21 +39,33 @@ class AvatarUploadTemplate implements TemplateInterface
 	{
 		$form_class = $this->getFormClass();
 
-		$att_id = get_user_meta( $GLOBALS['user_id'], $this->key, TRUE );
+		$user_id = isset( $GLOBALS['user_id'] )
+			? $GLOBALS['user_id']
+			: get_current_user_id();
+
+		$att_id = get_user_meta( $user_id, $this->key, TRUE );
 		FALSE !== $att_id
 			and $att_id = absint( $att_id );
 
-		$hidden = is_int( $att_id ) and 0 !== $att_id ? 'hidden' : '';
+		$hidden = (
+			is_int( $att_id )
+			and 0 !== $att_id
+		)
+			? 'hidden'
+			: '';
 
 		$action = $this->getAction();
 
+		! is_admin() && require_once ABSPATH.'/wp-admin/includes/media.php';
+
+		$title = esc_html( apply_filters( 'wcm.avatar.avatar_title', 'User Image' ) );
 		?>
 <div class="wrap">
 	<h2><!--
-		Placeholder so the fucking WP JavaScript error/success msg
+		Placeholder so the f***ing WP JavaScript error/success msg
 		gets inserted here and not *below* the title.
 	--></h2>
-	<h2><?php echo esc_html( __( 'Logo', 'company_domain' ) ); ?></h2>
+	<h2><?php echo $title; ?></h2>
 	<form enctype="multipart/form-data"
 		  method="post"
 		  action="<?php echo $action; ?>"
@@ -98,6 +110,10 @@ class AvatarUploadTemplate implements TemplateInterface
 
 	public function getAction()
 	{
+		// @link http://wordpress.stackexchange.com/a/126534/385
+		if ( ! is_admin() )
+			return esc_url( home_url( add_query_arg( NULL, NULL ) ) );
+
 		$action = admin_url( IS_PROFILE_PAGE ? 'profile.php' : 'user-edit.php' );
 		if (
 			! IS_PROFILE_PAGE

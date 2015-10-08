@@ -37,16 +37,18 @@
 					task        : 'fetch'
 				} )
 			)
-				.then(
-					// success
-					function( response ) {
-						//console.log( 'RESPONSE', self.attributes );
-					},
-					// error
-					function( reason ) {
-						//console.log( 'Model:fetch Error',reason );
-					}
-				);
+				.done( function( response ) {
+					self.set( {
+						thumb  : response.data.thumb,
+						name   : response.data.name,
+						width  : response.data.width,
+						height : response.data.height,
+						link   : response.data.link
+					} );
+				} )
+				.fail( function( reason ) {
+					//console.log( 'Model:fetch Error',reason );
+				} );
 
 			/*wp.ajax.post( plugin.action, {
 				_ajax_nonce : plugin._ajax_nonce,
@@ -69,7 +71,9 @@
 
 		// Triggered by: views.Delete
 		destroy : function( att_id ) {
+
 			var self = this;
+
 			$.when(
 				$.post( this.urlRoot, {
 					action      : plugin.action,
@@ -78,16 +82,13 @@
 					task        : 'destroy'
 				} )
 			)
-				.then(
-					// success
-					function( response ) {
-						//console.log( 'Model:destroy Success', response );
-					},
-					// error
-					function( reason ) {
-						//console.log( 'Model:destroy Error', reason );
-					}
-				);
+				.done( function( response ) {
+					// console.log( 'Model:destroy Success', response );
+				} )
+				.fail( function( reason ) {
+					// console.log( 'Model:destroy Error', reason );
+				} );
+
 			return {};
 		}
 	} );

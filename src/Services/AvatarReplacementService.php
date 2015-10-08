@@ -27,25 +27,40 @@ class AvatarReplacementService implements ServiceInterface
 	 */
 	public function __construct( $key )
 	{
-		$this->key   = $key;
+		$this->key = $key;
 	}
 
 
 	/**
-	 * @param string $html
-	 * @param int    $user_id
-	 * @param array  $args
+	 * @param string     $html
+	 * @param int|string $id_or_email
+	 * @param array      $args
 	 * @return null|string Return NULL to abort and replace nothing
 	 */
-	public function setup( $html = '', $user_id = -1, Array $args = [ ] )
+	public function setup( $html = '', $id_or_email = -1, Array $args = [ ] )
 	{
-		$att_id = absint( get_user_meta(
-			$user_id,
+		$default = get_option( 'avatar_default', 'mystery' );
+
+		// Don't force display
+		if ( ! $args['force_display'] && ! get_option( 'show_avatars' ) )
+			return $default;
+
+		/** @var \WP_User|bool $user */
+		$user = is_numeric( $id_or_email )
+			? get_userdata( $id_or_email )
+			: get_user_by( 'email', $id_or_email );
+
+		if ( ! $user instanceof \WP_User )
+			return $default;
+
+		$att_id = get_user_meta(
+			$id_or_email,
 			$this->key,
 			TRUE
-		) );
-		if ( ! is_int( $att_id ) )
-			return NULL;
+		);
+
+		if ( ! $att_id )
+			return $default;
 
 		// Additional argument to pass the attachment image
 		// size name to the filter
@@ -59,14 +74,10 @@ class AvatarReplacementService implements ServiceInterface
 		$img = wp_get_attachment_image(
 			$att_id,
 			$args['size_name'],
-			FALSE,
-			[ $this->key => TRUE, ]
+			FALSE
 		);
 		if ( empty( $img ) )
-			return NULL;
-
-		// High-Res 2× image Url
-		$srcset = $this->getUrlHighres( $att_id, $args );
+			return $default;
 
 		$dom = new \DOMDocument;
 		$dom->loadHTML( $img );
@@ -77,49 +88,35 @@ class AvatarReplacementService implements ServiceInterface
 		$tag    = $images->item(0);
 
 		// HTML img `alt`-attribute
-		if ( ! empty( $alt ) )
-		{
-			$tag->setAttribute( 'alt', $args['alt'] );
-		}
+		if ( isset( $args['alt'] ) )
+			$tag->setAttribute( 'alt', esc_attr( $args['alt'] ) );
 
-		// Highres Avatars
-		if ( ! empty( $url2x ) )
-		{
+		// High-res avatar image
+		if ( ( $srcset = $this->getUrlHighres( $att_id, $args ) ) )
 			$tag->setAttribute( 'srcset', esc_attr( "{$srcset} 2x" ) );
-		}
 
-		$tag->setAttribute(
-			'class',
-			$this->getClasses( $args )
-		);
+		// HTML classes
+		$classes = explode( ' ', $tag->getAttribute('class') );
+		array_walk( $classes, function(&$class) {
+			$class = trim( str_replace( 'attachment-', 'avatar-', $class ) );
+		});
+		$tag->setAttribute( 'class', $this->getClasses( $args, $classes ) );
 
-		// Assign extra attributes
-		if (
-			isset( $args['extra_attr'] )
-			and ! empty( $args['extra_attr'] )
-			)
-		{
-			$extra = $args['extra_attr'];
-			if ( ! is_array( $extra ) )
-				$extra = [ $extra, ];
+		// Extra attributes
+		$extra = isset( $args['extra_attr'] )
+			? (array) $args['extra_attr']
+			: [];
 
-			foreach ( $extra as $attr => $value )
-			{
-				$tag->setAttribute(
-					$attr,
-					esc_attr( $value )
-				);
+		foreach ( (array) $extra as $attr => $value ) {
+			if ( is_string( $attr ) && is_string( $value ) ) {
+				$tag->setAttribute( $attr, esc_attr( $value ) );
 			}
 		}
 
 		$tag->setAttribute( 'width', $args['width'] );
 		$tag->setAttribute( 'height', $args['height'] );
 
-		return sprintf(
-			'<a href="%s">%s</a>',
-			get_edit_post_link( $att_id ),
-			$dom->saveHTML( $tag )
-		);
+		return $dom->saveHTML( $tag );
 	}
 
 
@@ -146,42 +143,36 @@ class AvatarReplacementService implements ServiceInterface
 
 		// Only use the size in case it's really min. 2× the original size
 		return (
-			$height > ( $args['height'] *2 )
-			and $width > ( $args['width'] *2 )
+			$height >= ( $args['height'] * 2 )
+			and $width >= ( $args['width'] * 2 )
 		)
 			? $url
 			: '';
 	}
 
-
 	/**
 	 * @param array $args
+	 * @param array $imgClasses
 	 * @return string
 	 */
-	protected function getClasses( Array $args = [ ] )
+	protected function getClasses( Array $args = [ ], Array $imgClasses = [] )
 	{
-		if (
-			! isset( $args['class'] )
-			or empty( $args['class'] )
-		)
-			return '';
-
-		$size = isset( $args['size'] )
-			? 'avatar-'.absint( filter_var(
-				$args['size'],
-				FILTER_SANITIZE_NUMBER_INT
-			) )
-			: '';
-
-		$classes = array_merge( $args['class'], [
+		$baseClasses = [
 			'photo',
 			'avatar',
-		    $size
-		] );
+		];
 
-		return join(
-			"  ",
-			array_filter( $classes )
-		);
+		empty( $args['size'] ) || $baseClasses[] = 'avatar-' . $args['size'];
+
+		$classArg = isset( $args['class'] ) ? (array) $args['class'] : [];
+
+		$classes = array_merge( $classArg, $imgClasses, $baseClasses );
+
+		// Use this filter to customize the avatar classes
+		$classes = apply_filters( 'wcm.avatar.classes', $classes );
+
+		$class = join( ' ', array_unique( $classes ) );
+
+		return trim( str_replace( '  ', ' ', $class ) );
 	}
 }

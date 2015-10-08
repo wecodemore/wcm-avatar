@@ -61,15 +61,28 @@ class AvatarAddMetaService implements ServiceInterface
 				and isset( $_REQUEST['user_id'] )
 			)
 		) {
-			$user_id = absint( filter_var( $_REQUEST['user_id'], FILTER_VALIDATE_INT ) );
+			$user_id = absint( filter_var(
+				$_REQUEST['user_id'],
+				FILTER_VALIDATE_INT
+			) );
 
 			// Attach attachment ID to user meta as single entry (querying allowed)
-			update_user_meta( $user_id, $this->key, $att_id );
+			update_user_meta(
+				$user_id,
+				$this->key,
+				$att_id
+			);
 
 			// Attach user to attachment (single meta entry to allow querying)
-			add_post_meta( $att_id, 'user_id', $user_id, TRUE );
-			// Or: Attach user to attachment meta data array
-			$meta['user_id'] = $user_id;
+			add_post_meta(
+				$att_id,
+				'user_id',
+				$user_id,
+				TRUE
+			);
+
+			// Or: Attach user to the attachment meta data array
+			# $meta['user_id'] = $user_id;
 		}
 
 		return $meta;

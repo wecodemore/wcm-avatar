@@ -48,8 +48,10 @@ class AvatarUserColumnService implements ServiceInterface
 			'getContent'
 		], 10, 3 );
 
+		$title = apply_filters( 'wcm.avatar.avatar_title', 'User Image' );
+
 		return $start
-			+ [ $this->key => __( 'Logo', 'company_domain' ), ]
+			+ [ $this->key => $title, ]
 			+ $end;
 	}
 
@@ -76,8 +78,7 @@ class AvatarUserColumnService implements ServiceInterface
 		$img = wp_get_attachment_image(
 			$att_id,
 			'thumbnail',
-			FALSE,
-			[ $this->key => TRUE, ]
+			FALSE
 		);
 		if ( empty( $img ) )
 			return $value;
@@ -87,8 +88,10 @@ class AvatarUserColumnService implements ServiceInterface
 
 		/** @var \DOMNodeList $images */
 		$images = $dom->getElementsByTagName( 'img' );
+
 		/** @var \DOMElement $tag */
 		$tag    = $images->item(0);
+
 		$tag->setAttribute( 'width', 32 );
 		$tag->setAttribute( 'height', 32 );
 

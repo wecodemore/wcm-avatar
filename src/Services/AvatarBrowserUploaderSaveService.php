@@ -57,6 +57,16 @@ class AvatarBrowserUploaderSaveService implements ServiceInterface
 		if ( ! is_array( $file ) )
 			return;
 
+		$result = media_handle_upload( 'async-upload', $post_id = - 1 );
+		if ( is_wp_error( $result ) )
+		{
+			$this->error[] = $result;
+			add_filter( "{$this->key}_upload_errors", [
+				$this,
+				'addError',
+			], 10, 1 );
+		}
+
 		/*$location = admin_url( sprintf(
 			'%s.php',
 			get_current_screen()->base
@@ -71,16 +81,6 @@ class AvatarBrowserUploaderSaveService implements ServiceInterface
 				absint( $_REQUEST['user_id'] ),
 				$location
 			);*/
-
-		$result = media_handle_upload( 'async-upload', $post_id = - 1 );
-		if ( is_wp_error( $result ) )
-		{
-			$this->error[] = $result;
-			add_filter( "{$this->key}_upload_errors", [
-				$this,
-				'addError',
-			], 10, 1 );
-		}
 
 		# Custom Errors: {$action}_prefilter > $file > return $file['error'] = ''; > returns [ 'error' => $message, ]
 		#if ( is_array( $result ) )
