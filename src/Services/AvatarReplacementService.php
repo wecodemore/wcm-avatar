@@ -53,11 +53,11 @@ class AvatarReplacementService implements ServiceInterface
 		if ( ! $user instanceof \WP_User )
 			return $default;
 
-		$att_id = absint( get_user_meta(
-			$id_or_email,
+		$att_id = get_user_meta(
+			$user->ID,
 			$this->key,
 			TRUE
-		) );
+		);
 
 		if ( ! $att_id )
 			return $default;
