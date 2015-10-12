@@ -56,7 +56,10 @@ class UploadView implements ServiceInterface
 			is_admin()
 			&& (
 				! current_user_can( 'upload_files' )
-				or ( ! IS_PROFILE_PAGE && ! current_user_can( 'edit_users' ) )
+				or (
+					( defined( 'IS_PROFILE_PAGE' ) && ! IS_PROFILE_PAGE )
+					&& ! current_user_can( 'edit_users' )
+				)
 				or ! in_array( get_current_screen()->base, [
 					'profile',
 					'user-edit',
