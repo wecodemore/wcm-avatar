@@ -59,6 +59,7 @@ class AvatarMIMELimitService implements ServiceInterface
 		if (
 			empty( $this->where )
 			or current_user_can( $this->cap )
+			or ( defined( 'DOING_CRON' ) and DOING_CRON )
 			or (
 				is_admin()
 				&& ! in_array( get_current_screen()->base, $this->where )
