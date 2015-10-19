@@ -25,7 +25,7 @@ class AvatarMIMELimitService implements ServiceInterface
 	private $allowed;
 
 	/** @var array */
-	private $where;
+	private $where = [ ];
 
 
 	/**
@@ -48,17 +48,22 @@ class AvatarMIMELimitService implements ServiceInterface
 	 * @link http://www.iana.org/assignments/media-types/media-types.xhtml
 	 *       To implement WebP, use 'webp'
 	 * @param array $mimes
+	 * @param int|\WP_User|null $user User ID, User object or null
+	 *                                if not provided (indicates current user).
 	 * @return array
 	 */
-	public function setup( Array $mimes = [ ] )
+	public function setup( Array $mimes = [ ], $user = null )
 	{
 		$mimes['webp'] = 'image/webp';
 
 		if (
 			empty( $this->where )
 			or current_user_can( $this->cap )
-			or is_admin()
-			&& ! in_array( get_current_screen()->base, $this->where )
+			or ( defined( 'DOING_CRON' ) and DOING_CRON )
+			or (
+				is_admin()
+				&& ! in_array( get_current_screen()->base, $this->where )
+			)
 		)
 			return $mimes;
 
