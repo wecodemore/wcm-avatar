@@ -40,31 +40,9 @@ class AvatarAddMetaService implements ServiceInterface
 	 */
 	public function setup( Array $meta = [ ], $att_id = 0 )
 	{
-		if (
-			// "Multi-File Uploader"
-			(
-				isset( $_REQUEST['user_id'] )
-				and isset( $_REQUEST['screen_id'] )
-				and in_array( $_REQUEST['screen_id'], [
-					'profile',
-					'user-edit',
-				] )
-			)
-			// "Browser Uploader"
-			or (
-				isset( $_REQUEST['html-upload'] )
-				and 'Upload' === $_POST['html-upload']
-				and in_array( get_current_screen()->base, [
-					'profile',
-					'user-edit',
-				] )
-				and isset( $_REQUEST['user_id'] )
-			)
-		) {
-			$user_id = absint( filter_var(
-				$_REQUEST['user_id'],
-				FILTER_VALIDATE_INT
-			) );
+		if ( $this->isValidMultiUpload() or $this->isValidBrowserUpload() ) {
+
+			$user_id = $this->getUserID();
 
 			// Attach attachment ID to user meta as single entry (querying allowed)
 			update_user_meta(
@@ -87,4 +65,53 @@ class AvatarAddMetaService implements ServiceInterface
 
 		return $meta;
 	}
+
+	/**
+	 * Returns the User ID, either from the $_REQUEST (on other peoples Profile) or from logged in user (on own profile)
+	 * @return int
+	 */
+	protected function getUserID(){
+
+		if( isset( $_REQUEST['user_id'] ) ){
+			$user_id = absint( filter_var(
+				$_REQUEST['user_id'],
+				FILTER_VALIDATE_INT
+			) );
+		}else{
+			$user_id = get_current_user_id();
+		}
+
+		return $user_id;
+
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isValidMultiUpload(){
+		return  isset( $_REQUEST['user_id'] )
+		        and isset( $_REQUEST['screen_id'] )
+				and in_array( $_REQUEST['screen_id'], [
+					'profile',
+					'user-edit',
+				]);
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function isValidBrowserUpload(){
+		return  isset( $_REQUEST['html-upload'] )
+				and 'Upload' === $_POST['html-upload']
+				and (
+						(
+						'user-edit' === get_current_screen()->base
+						&&
+						isset( $_REQUEST['user_id'] )
+						)
+						or
+						'profile' === get_current_screen()->base
+				);
+	}
+
 }
