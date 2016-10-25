@@ -153,6 +153,11 @@ add_action( 'plugins_loaded', function()
 	    'setup'
 	] );
 
+	// Only allow upload of image if user doesn't have an avatar set yet.
+	add_filter( 'wp_handle_upload_prefilter', [
+		new Services\AvatarExistsLimitService( $key ),
+		'setup'
+	] );
 
 	// Add Image to User Columns
 	// Use the filter to enable this feature
