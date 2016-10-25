@@ -73,6 +73,12 @@ class AvatarUploadTemplate implements TemplateInterface
 		  id="file-form">
 
 		<div id="tmpl-uploader--container" class="<?php echo $hidden; ?>">
+			<?php
+				add_filter( 'plupload_init',[
+					$this,
+					'forceSingleSelection'
+				] );
+			?>
 			<?php media_upload_form( apply_filters( "{$this->key}_upload_errors", [] ) ); ?>
 
 			<script type="text/javascript">
@@ -94,6 +100,16 @@ class AvatarUploadTemplate implements TemplateInterface
 <?php
 	}
 
+	public function forceSingleSelection( $plupload_init ){
+
+		remove_filter( current_filter(), [
+			$this,
+			__FUNCTION__
+		] );
+
+		$plupload_init['multi_selection'] = false;
+		return $plupload_init;
+	}
 
 	public function getFormClass()
 	{
