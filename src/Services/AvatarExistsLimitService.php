@@ -34,12 +34,12 @@ class AvatarExistsLimitService implements ServiceInterface {
 		$user_id = filter_input( INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT );
 
 		if( false === get_userdata($user_id) ){
-			$file['error'] = 'Cannot find user.';
+			$file['error'] = __( 'Cannot find user.', 'wcmavatar' );
 			return $file;
 		}
 
 		if( $this->userHasAvatar( $user_id ) ){
-			$file['error'] = 'This user already has an avatar set. To upload a new avatar delete the old one first.';
+			$file['error'] = __( 'This user already has an avatar set. To upload a new avatar delete the old one first.', 'wcmavatar' );
 			return $file;
 		}
 
