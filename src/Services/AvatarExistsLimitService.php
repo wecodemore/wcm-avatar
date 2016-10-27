@@ -53,9 +53,7 @@ class AvatarExistsLimitService implements ServiceInterface {
 	 */
 	protected function userHasAvatar( $user_id ){
 
-		$avatar = get_user_meta( $user_id, $this->key, true );
-
-		return !!$avatar;
+		return ! empty( get_user_meta( $user_id, $this->key, true ) );
 
 	}
 
