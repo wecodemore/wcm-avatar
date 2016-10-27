@@ -1,247 +1,49 @@
-#: Bootstrap.php:26
-msgid   "Phone"
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the wcmavatar package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid   ""
+msgstr  "Project-Id-Version: wcmavatar\n"
+        "Report-Msgid-Bugs-To: wecodemore@gmail.com\n"
+        "POT-Creation-Date: 2016-10-27 22:27+0200\n"
+        "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+        "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+        "Language-Team: LANGUAGE <LL@li.org>\n"
+        "Language: \n"
+        "MIME-Version: 1.0\n"
+        "Content-Type: text/plain; charset=UTF-8\n"
+        "Content-Transfer-Encoding: 8bit\n"
+#
+# File: src/Services/AvatarDimensionLimitService.php, line: 67
+#, php-format
+msgctxt "%s are the maximum pixels"
+msgid   "Image exceeds maximum size of %spx × %spx"
 msgstr  ""
-
-#: Bootstrap.php:27
-msgid   "Twitter"
+#
+# File: src/Services/AvatarDimensionLimitService.php, line: 83
+#, php-format
+msgctxt "%s are the minimum pixels"
+msgid   "Image does not reach the needed minimum size of %spx × %spx"
 msgstr  ""
-
-#: Bootstrap.php:28
-msgid   "facebook"
+#
+# File: src/Services/AvatarExistsLimitService.php, line: 37
+msgid   "Cannot find user."
 msgstr  ""
-
-#: Bootstrap.php:29
-msgid   "Google+"
+#
+# File: src/Services/AvatarExistsLimitService.php, line: 42
+msgid   "This user already has an avatar set. To upload a new avatar delete "
+        "the old one first."
 msgstr  ""
-
-#: Bootstrap.php:30
-msgid   "GitHub"
-msgstr  ""
-
-#: Bootstrap.php:31
-msgid   "Bitbucket"
-msgstr  ""
-
-#: Bootstrap.php:33
-msgid   "WP.StackExchange"
-msgstr  ""
-
-#: Bootstrap.php:34
-msgid   "StackOverflow"
-msgstr  ""
-
-#: Bootstrap.php:35
-msgid   "WordPress.org"
-msgstr  ""
-
-#: Bootstrap.php:273 src/Templates/LogoDisplayTemplate.php:32
+#
+# File: src/Services/AvatarScriptsService.php, line: 247
+# File: src/Templates/AvatarDisplayTemplate.php, line: 55
 msgctxt "media item"
 msgid   "Edit"
 msgstr  ""
-
-#: Bootstrap.php:274
+#
+# File: src/Services/AvatarScriptsService.php, line: 250
 msgctxt "media item"
 msgid   "No Logo"
-msgstr  ""
-
-#: Bootstrap.php:303 src/Templates/LogoUploadTemplate.php:39
-msgid   "Logo"
-msgstr  ""
-
-#: Bootstrap.php:377
-msgid   "Company Details & Project Conditions"
-msgstr  ""
-
-#: Bootstrap.php:390
-msgid   "Headquarter Location"
-msgstr  ""
-
-#: Bootstrap.php:392
-msgid   "If multiple addresses were found, please choose from the list for "
-        "autocomplete."
-msgstr  ""
-
-#: Bootstrap.php:433
-msgid   "No results"
-msgstr  ""
-
-#: Bootstrap.php:434
-msgid   "Please slow down"
-msgstr  ""
-
-#: Bootstrap.php:435
-msgid   "An unknown error returned from Google."
-msgstr  ""
-
-#: Bootstrap.php:477
-msgid   "1"
-msgstr  ""
-
-#: Bootstrap.php:478
-#, php-format
-msgid   "2 %s 5"
-msgstr  ""
-
-#: Bootstrap.php:479
-#, php-format
-msgid   "6 %s 10"
-msgstr  ""
-
-#: Bootstrap.php:480
-#, php-format
-msgid   "11 %s 20"
-msgstr  ""
-
-#: Bootstrap.php:481
-#, php-format
-msgid   "21 %s 30"
-msgstr  ""
-
-#: Bootstrap.php:482
-#, php-format
-msgid   "31 %s 50"
-msgstr  ""
-
-#: Bootstrap.php:483
-#, php-format
-msgid   "51 %s 75"
-msgstr  ""
-
-#: Bootstrap.php:484
-#, php-format
-msgid   "76 %s 100"
-msgstr  ""
-
-#: Bootstrap.php:485
-msgid   "100+"
-msgstr  ""
-
-#: Bootstrap.php:487
-msgid   "Number of Employees"
-msgstr  ""
-
-#: Bootstrap.php:490
-msgid   "The approximate amount of employees in the company."
-msgstr  ""
-
-#: Bootstrap.php:511
-msgid   "Minimum Budget"
-msgstr  ""
-
-#: Bootstrap.php:513
-msgid   "Your company only takes projects <strong>starting</strong> with this "
-        "budget."
-msgstr  ""
-
-#: Bootstrap.php:514
-msgid   "(Please increment in $100-steps.)"
-msgstr  ""
-
-#: Bootstrap.php:536
-msgid   "Hourly Rate"
-msgstr  ""
-
-#: Bootstrap.php:537
-msgid   "The <strong>hourly</strong> rate of your employees."
-msgstr  ""
-
-#: Bootstrap.php:559
-msgid   "Flat rate"
-msgstr  ""
-
-#: Bootstrap.php:560
-msgid   "Hourly"
-msgstr  ""
-
-#: Bootstrap.php:563
-msgid   "Project Billing Options"
-msgstr  ""
-
-#: Bootstrap.php:564
-msgid   "Check both if it depends on the project or the client."
-msgstr  ""
-
-#: Bootstrap.php:589
-msgid   "RFP Fee"
-msgstr  ""
-
-#: Bootstrap.php:592
-msgid   "What your company asks for per <strong>Request For Proposal</strong>."
-msgstr  ""
-
-#: Bootstrap.php:593
-msgid   "(Leave empty or set to <code>0</code> if you offer <strong>free</"
-        "strong> RFPs.)"
-msgstr  ""
-
-#: Bootstrap.php:615
-msgid   "days"
-msgstr  ""
-
-#: Bootstrap.php:618
-msgid   "Workdays until Deadline"
-msgstr  ""
-
-#: Bootstrap.php:619
-msgid   "The <strong>minimum</strong> time from project start to deadline."
-msgstr  ""
-
-#: Bootstrap.php:641
-msgid   "Themes"
-msgstr  ""
-
-#: Bootstrap.php:642
-msgid   "Plugins"
-msgstr  ""
-
-#: Bootstrap.php:643
-msgid   "Design"
-msgstr  ""
-
-#: Bootstrap.php:644
-msgid   "Hosting"
-msgstr  ""
-
-#: Bootstrap.php:645
-msgid   "Webmaster/Installation"
-msgstr  ""
-
-#: Bootstrap.php:646
-msgid   "Recovering from Hacks"
-msgstr  ""
-
-#: Bootstrap.php:647
-msgid   "Security Audits"
-msgstr  ""
-
-#: Bootstrap.php:648
-msgid   "Performance Audits"
-msgstr  ""
-
-#: Bootstrap.php:649
-msgid   "Code Review"
-msgstr  ""
-
-#: Bootstrap.php:652
-msgid   "Job Types"
-msgstr  ""
-
-#: Bootstrap.php:653
-msgid   "The type of work your company offers."
-msgstr  ""
-
-#: src/Services/ContactMethodService.php:82
-msgid   "Not yet implemented"
-msgstr  ""
-
-#: src/Services/RephraseService.php:57
-msgid   "Contact Person"
-msgstr  ""
-
-#: src/Services/RephraseService.php:77
-msgid   "Description"
-msgstr  ""
-
-#: src/Services/RephraseService.php:80
-msgid   "About the Company"
 msgstr  ""
