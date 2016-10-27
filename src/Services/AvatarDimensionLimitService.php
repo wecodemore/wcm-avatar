@@ -66,7 +66,7 @@ class AvatarDimensionLimitService implements ServiceInterface
 			$file['error'] = sprintf( _x(
 				'Image exceeds maximum size of %spx × %spx',
 				'%s are the maximum pixels',
-				'clients_domain'
+				'wcmavatar'
 			), number_format_i18n( $max ), number_format_i18n( $max ) );
 		}
 
@@ -82,7 +82,7 @@ class AvatarDimensionLimitService implements ServiceInterface
 			$file['error'] = sprintf( _x(
 				'Image does not reach the needed minimum size of %spx × %spx',
 				'%s are the minimum pixels',
-				'clients_domain'
+				'wcmavatar'
 			), number_format_i18n( $min ), number_format_i18n( $min ) );
 		}
 
