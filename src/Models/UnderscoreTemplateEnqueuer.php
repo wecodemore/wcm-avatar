@@ -67,6 +67,10 @@ class UnderscoreTemplateEnqueuer
 
         $filter = function ($script_tag_markup = '', $handle = '') use ($template_name) {
 
+	        if( $handle !== "tmpl-{$template_name}" ){
+		        return $script_tag_markup;
+	        }
+
             return $this->makeTemplateInline($script_tag_markup, $handle, $template_name);
         };
 
@@ -74,13 +78,11 @@ class UnderscoreTemplateEnqueuer
 
         wp_enqueue_script(
             "tmpl-{$template_name}",
-            $this->url . $template_name . '.tmpl',
+            $this->templateUrl($template_name),
             [],
             @filemtime($path) ?: null,
             true
         );
-
-        remove_filter('script_loader_tag', $filter, 20);
 
         return true;
 
@@ -92,8 +94,16 @@ class UnderscoreTemplateEnqueuer
      */
     private function templatePath($template)
     {
-        return $this->path . $template . '.tmpl';
+        return $this->path . 'assets/templates/' . $template . '.tmpl';
     }
+
+	/**
+	 * @param $template
+	 * @return string
+	 */
+	private function templateUrl($template){
+		return $this->url. 'assets/templates/' . $template . '.tmpl';
+	}
 
     /**
      * @param $template_path
