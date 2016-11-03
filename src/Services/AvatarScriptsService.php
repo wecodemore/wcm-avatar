@@ -107,7 +107,7 @@ class AvatarScriptsService implements ServiceInterface
 			'caption',
 		];
 
-        array_walk($templates, [$this->templateEnqueuer, 'enqueue']);
+        array_walk( $templates, [ $this->templateEnqueuer, 'enqueue' ] );
 	}
 
 
