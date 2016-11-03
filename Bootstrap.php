@@ -83,8 +83,10 @@ add_action( 'plugins_loaded', function()
 		new Services\AvatarScriptsService(
 			$ajax,
 			$key,
-			plugin_dir_url( __FILE__ ),
-			plugin_dir_path( __FILE__ )
+			new Models\UnderscoreTemplateEnqueuer(
+			    plugin_dir_url( __FILE__ ),
+                plugin_dir_path( __FILE__ )
+            )
 		),
 	    'setup'
 	] );
