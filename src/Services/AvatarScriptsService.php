@@ -56,10 +56,17 @@ class AvatarScriptsService implements ServiceInterface
 
 	public function setup( $screen = '' )
 	{
-		if ( ! in_array( $screen, [
-			'profile.php',
-			'user-edit.php',
-		] ) )
+		if (
+			! current_user_can( 'upload_files' )
+			or (
+				( defined( 'IS_PROFILE_PAGE' ) && ! IS_PROFILE_PAGE )
+				&& ! current_user_can( 'edit_users' )
+			)
+			or ! in_array( $screen, [
+				'profile.php',
+				'user-edit.php',
+			] )
+		)
 			return;
 
 		$ext = $this->getExtension();
