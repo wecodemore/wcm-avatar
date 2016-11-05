@@ -6,9 +6,9 @@
     "analyze"         : true,
     "bin"             : "./bin",
     "devDependencies" : {
-        "watch"      : "~0.13",
-        "concat-cli" : "~1.0",
-        "minify"     : "~1.4"
+        "watch"      : "~1.0",
+        "concat-cli" : "~4.0",
+        "minify"     : "~2.0"
     },
     "scripts"         : {
         "build:watch" : "sh ./scripts/watch",
