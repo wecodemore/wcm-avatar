@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-watch "npm run build" assets/src
+watch "$(<./scripts/js) $(<./scripts/css)" assets/src
