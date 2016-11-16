@@ -72,12 +72,6 @@ add_action( 'plugins_loaded', function()
 		] );
 	}
 
-	// Allow registering Underscore Templates using the WP Dependency API
-	add_filter( 'script_loader_tag', [
-		new Services\UnderscoreTemplateScripts,
-	    'setup'
-	], 20, 3 );
-
 	// Ajax Model
 	$ajax = new Models\AjaxAware(
 		$key,
@@ -89,8 +83,10 @@ add_action( 'plugins_loaded', function()
 		new Services\AvatarScriptsService(
 			$ajax,
 			$key,
-			plugin_dir_url( __FILE__ ),
-			plugin_dir_path( __FILE__ )
+			new Models\UnderscoreTemplateEnqueuer(
+			    plugin_dir_url( __FILE__ ),
+                plugin_dir_path( __FILE__ )
+            )
 		),
 	    'setup'
 	] );

@@ -27,30 +27,23 @@ class AvatarScriptsService implements ServiceInterface
 	/** @var string */
 	private $key;
 
-	/** @var string */
-	private $url;
-
-	/** @var string */
-	private $root;
+    /** @var \WCM\User\Avatar\Models\UnderscoreTemplateEnqueuer */
+	private $templateEnqueuer;
 
 
 	/**
 	 * @param \WCM\User\Avatar\Models\AjaxAwareInterface $ajax
 	 * @param string                                     $key
-	 * @param string                                     $url
-	 * @param string                                     $root
+	 * @param Models\UnderscoreTemplateEnqueuer                  $enqueuer
 	 */
 	public function __construct(
-		Models\AjaxAwareInterface $ajax,
-		$key,
-		$url,
-		$root
-		)
+	    Models\AjaxAwareInterface $ajax,
+        $key,
+        Models\UnderscoreTemplateEnqueuer $enqueuer)
 	{
 		$this->ajax = $ajax;
 		$this->key  = $key;
-		$this->url  = $url;
-		$this->root = $root;
+		$this->templateEnqueuer = $enqueuer;
 	}
 
 
@@ -66,8 +59,8 @@ class AvatarScriptsService implements ServiceInterface
 
 		$this->addTemplates();
 
-		$url  = "{$this->url}assets/src/logo";
-		$path = "{$this->root}assets/src/logo";
+		$url  = $this->templateEnqueuer->baseUrl().'assets/src/logo';
+		$path = $this->templateEnqueuer->basePath().'assets/src/logo';
 
 		( defined( 'CONCATENATE_SCRIPTS' ) and CONCATENATE_SCRIPTS )
 			? $this->addScriptsConcat( $url, $path, $ext )
@@ -107,9 +100,6 @@ class AvatarScriptsService implements ServiceInterface
 
 	public function addTemplates()
 	{
-		$url  = "{$this->url}assets/templates";
-		$path = "{$this->root}assets/templates";
-
 		$templates = [
 			'logo',
 			'thumb',
@@ -117,16 +107,7 @@ class AvatarScriptsService implements ServiceInterface
 			'caption',
 		];
 
-		foreach ( $templates as $template )
-		{
-			wp_enqueue_script(
-				"tmpl-{$template}",
-				"{$url}/{$template}.tmpl",
-				[ ],
-				filemtime( "{$path}/{$template}.tmpl" ),
-				TRUE
-			);
-		}
+        array_walk( $templates, [ $this->templateEnqueuer, 'enqueue' ] );
 	}
 
 
@@ -252,7 +233,7 @@ class AvatarScriptsService implements ServiceInterface
 		];
 	}
 
-	
+
 	/**
 	 * @param int $att_id
 	 * @param     $colors
