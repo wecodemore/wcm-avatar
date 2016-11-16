@@ -174,11 +174,4 @@ add_action( 'plugins_loaded', function()
 			'setup'
 		], 20, 3 );
 	}
-
-
-	// Register stylesheet for Icons and other UI integration
-	add_filter( 'admin_enqueue_scripts', [
-		new Services\AdminStylesService( __FILE__ ),
-	    'setup'
-	] );
 } );
