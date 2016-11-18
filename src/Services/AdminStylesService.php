@@ -26,10 +26,6 @@ class AdminStylesService implements ServiceInterface
 	public function __construct( $root )
 	{
 		$this->root = $root;
-		add_action( 'admin_head', [
-			$this,
-			'dnsPrefetch'
-		] );
 	}
 
 
@@ -48,14 +44,7 @@ class AdminStylesService implements ServiceInterface
 			[ ],
 			@filemtime( plugin_dir_path( $this->root ) . $file )
 		);
-		wp_enqueue_style(
-			'devicons',
-			'//cdn.jsdelivr.net/devicons/1.7.0/css/devicons.min.css',
-			[ ],
-			'1.7.0'
-		);
 	}
-
 
 	/**
 	 * @param $screen
@@ -68,18 +57,6 @@ class AdminStylesService implements ServiceInterface
 			'user-edit.php',
 		] );
 	}
-
-
-	/**
-	 * DNS Prefetch for faster lookups
-	 *
-	 * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Controlling_DNS_prefetching
-	 */
-	public function dnsPrefetch()
-	{
-		?><link rel="dns-prefetch" href="//cdn.jsdelivr.net"><?php
-	}
-
 
 	/**
 	 * @return string
