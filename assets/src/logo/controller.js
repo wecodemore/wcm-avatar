@@ -45,9 +45,23 @@
 		// Bind event handler to file upload / drag&drop
 		uploader.bind( 'FileUploaded', function( up, file, response ) {
 
-			if ( 200 !== response.status ) {
-				return;
-			}
+            if ( 200 !== response.status ) {
+                return;
+            }
+
+            // Start C&P from handlers.js
+            // https://github.com/WordPress/WordPress/blob/32be6f7bb73b5c8e4bdd90179aa85b275606d982/wp-includes/js/plupload/handlers.js#L83-L87
+
+            var serverData = response.response;
+
+            // on success serverData should be numeric, fix bug in html4 runtime returning the serverData wrapped in a <pre> tag
+            serverData = serverData.replace(/^<pre>(\d+)<\/pre>$/, '$1');
+
+            // if async-upload returned an error message, place it in the media item div and return
+            if ( serverData.match(/media-upload-error|error-div/) ) {
+                return;
+            }
+            // End C&P from handlers.js
 
 			// Triggers Model:fetch( att_id ) & event listeners in the views
 			logo.set( { 'att_id' : response.response } );
