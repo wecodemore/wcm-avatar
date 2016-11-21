@@ -102,7 +102,7 @@ class AvatarAddMetaService implements ServiceInterface
 	 */
 	protected function isValidBrowserUpload(){
 		return  isset( $_REQUEST['html-upload'] )
-				and 'Upload' === $_POST['html-upload']
+				and __( 'Upload' ) === $_POST['html-upload']
 				and (
 						(
 						'user-edit' === get_current_screen()->base
