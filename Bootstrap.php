@@ -99,7 +99,7 @@ add_action( 'plugins_loaded', function()
 	] );
 
 	// Adds either the drag & drop uploader for the user avatar or the avatar itself
-	add_filter( 'all_admin_notices', [
+	add_action( 'all_admin_notices', [
 		new Views\UploadView(
 			new Templates\AvatarUploadTemplate( $key ),
 			new Templates\AvatarDisplayTemplate,
