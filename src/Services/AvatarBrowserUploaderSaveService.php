@@ -46,7 +46,7 @@ class AvatarBrowserUploaderSaveService implements ServiceInterface
 			or ! isset( $_FILES['async-upload'] )
 			or (
 				isset( $_POST['html-upload'] )
-				and 'Upload' !== $_POST['html-upload']
+				and __( 'Upload' ) !== $_POST['html-upload']
 			)
 		)
 			return;
