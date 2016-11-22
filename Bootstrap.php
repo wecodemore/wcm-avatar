@@ -120,14 +120,24 @@ add_action( 'plugins_loaded', function()
 
 
 	// Limit upload size of image to 256 * 512 = 128 kB
+	$upload_size_limit = 256 * 512;
+
 	add_filter( 'upload_size_limit', [
 		new Services\AvatarUploadSizeLimit(
 			'manage_options',
-			256 * 512,
+			$upload_size_limit,
 			[ 'profile', 'user-edit', 'media', 'upload', ]
 		),
 	    'setup'
 	], 10, 3 );
+
+	// Limit width/height of uploaded images
+	add_filter( 'wp_handle_upload_prefilter', [
+		new Services\AvatarUploadSizeLimitService(
+			$upload_size_limit
+		),
+		'setup'
+	] );
 
 
 	// Limit allowed MIME types for image uploads
