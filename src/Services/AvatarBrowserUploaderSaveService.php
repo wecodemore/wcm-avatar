@@ -24,7 +24,7 @@ class AvatarBrowserUploaderSaveService implements ServiceInterface
 	private $key;
 
 	/** @var \WP_Error */
-	private $error = [ ];
+	private $error;
 
 
 	/**
@@ -60,7 +60,7 @@ class AvatarBrowserUploaderSaveService implements ServiceInterface
 		$result = media_handle_upload( 'async-upload', $post_id = - 1 );
 		if ( is_wp_error( $result ) )
 		{
-			$this->error[] = $result;
+			$this->error = $result;
 			add_filter( "{$this->key}_upload_errors", [
 				$this,
 				'addError',
